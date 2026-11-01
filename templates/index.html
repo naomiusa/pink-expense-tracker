@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Pink Expense Tracker</title>
+
+    <style>
+        body {
+        background-color: #fff5f8;
+        font-family: Arial, sans-serif;
+        color: #4a3039;
+        text-align: center;
+        padding: 30px;
+    }
+
+    h1 {
+        color: #d63384;
+        font-size: 36px;
+    }
+
+    h2 {
+        color: #c4457c;
+        margin-top: 35px;
+    }
+
+    input {
+        padding: 12px;
+        margin: 8px;
+        border: 1px solid #f0b6ce;
+        border-radius: 10px;
+    }
+
+    button {
+        background-color: #e75480;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #c93668;
+    }
+.summary-card{
+background:#fff0f6;
+border: 2px solid #ffc1dc;
+border-radius: 18px;
+padding: 10px 0;
+margin: 10px auto;
+width: 250px;
+box-shadow: 0 4px 10px rgba(255, 105, 180, 0.15);
+}
+
+.summary-card p {
+color:#d63384;
+font-size: 17px;
+font-weight: bold;
+margin: 5px 0;
+}
+
+</style>
+</head>
+<body>
+
+<h1>🎀My Expense Tracker🎀</h1>
+<p>Take control of your money, one expense at a time.</p>
+
+<h2>Monthly Budget</h2>
+<input type="number" id="budget" placeholder="Enter your monthly budget">
+<button onclick="setBudget()">Set Budget</button>
+
+<p id="budgetMessage"></p>
+
+<h2>Add an Expense</h2>
+
+
+<p class="summary-card">Total Spent: $<span id="totalSpent">0</span></p>
+
+<p class="summary-card">Remaining Budget: $<span  id="remainingBudget">0</span></p>
+
+<input type="text" id="expenseName" placeholder="Expense name">
+<input type="number" id="expenseAmount" placeholder="Amount">
+<button onclick="addExpense()">Add Expense</button>
+
+<h2>My Expenses</h2>
+<ul id="expenseList"></ul>
+<p id="emptyMessage">Your expenses will appear here.</p>
+<script>
+    function setBudget() {
+         let budgetInput = document.getElementById("budget").value;
+
+         if (budgetInput === "" || Number(budgetInput) <= 0) {
+            document.getElementById("budgetMessage").textContent = "Please enter a valid budget";
+    return;
+}
+
+budget = Number(budgetInput);
+localStorage.setItem("budget", budget);
+
+document.getElementById("budgetMessage").textContent = "Your monthly budget is set!";
+}
+
+let budget = Number(localStorage.getItem("budget")) || 0;
+let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+let total = 0;
+
+function addExpense() {
+    let name = document.getElementById("expenseName").value;
+    let amount = Number(document.getElementById("expenseAmount").value)
+
+    if (name.trim()=== "" || amount <= 0) {
+        alert("Please ente an expense name and valid amount.");
+        return;
+    }
+    
+   let expense = {
+    id: Date.now(),
+    name: name,
+    amount: amount,
+    date: new Date().toLocaleDateString()
+};
+expenses.push(expense);
+fetch("/add_expense", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        name: name,
+        amount: amount,
+        date: expense.date 
+    })
+})
+.then(response => response.json())
+.then(data => {
+    console.log(data);
+});
+
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+
+    total = total + amount;
+
+    let expenseList = document.getElementById("expenseList");
+
+    let newExpense = document.createElement("li");
+    
+newExpense.textContent = name + " - $" + amount.toLocaleString() + " - " + expense.date;
+    expenseList.appendChild(newExpense);
+
+let deleteButton = document.createElement ("button");
+deleteButton.textContent = "Delete";
+newExpense.appendChild(deleteButton);
+deleteButton.onclick = function() {
+    total = total - amount;
+    expenses = expenses.filter(item => item.id !== expense.id);
+    newExpense.remove();
+    document.getElementById("totalSpent").textContent = total.toLocaleString();
+    document.getElementById("remainingBudget").textContent = (budget - total).toLocaleString();
+    if (total > budget) {
+    document.getElementById("budgetMessage").textContent = "Warning! You have exceeded your budget!";
+} else {
+    document.getElementById("budgetMessage").textContent = "You're within your budget!";
+}
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+}
+    document.getElementById("totalSpent").textContent = total.toLocaleString();
+
+    let remaining = budget - total;
+    document.getElementById("remainingBudget").textContent = remaining;
+    if (remaining < 0) {
+    document.getElementById("budgetMessage").textContent = "Warning! You have exceeded your budget!";
+} else {
+    document.getElementById("budgetMessage").textContent = "You're within your budget!";
+}
+    document.getElementById("expenseName").value = "";
+    document.getElementById("expenseAmount").value = "";
+
+}
+document.getElementById("budget").value = budget || "";
+
+total = expenses.reduce(function(sum, expense) {
+    return sum + Number(expense.amount);
+}, 0);
+
+document.getElementById("totalSpent").textContent = total.toLocaleString();
+
+document.getElementById("remainingBudget").textContent = (budget - total).toLocaleString();
+if (total > budget) {
+    document.getElementById("budgetMessage").textContent = "Warning! You have exceeded your budget!";
+} else if (budget > 0) {
+    document.getElementById("budgetMessage").textContent = "You're within your budget!";
+}
+expenses.forEach(function(expense) {
+    let expenseList = document.getElementById("expenseList");
+
+    let newExpense = document.createElement("li");
+   newExpense.textContent = expense.name + " - $" +
+    Number(expense.amount).toLocaleString() + " - " + (expense.date || "Date unavailable");
+    
+    let deleteButton = document.createElement ("button");
+    deleteButton.textContent = "Delete";
+
+    newExpense.appendChild(deleteButton);
+    expenseList.appendChild(newExpense);
+    document.getElementById("emptyMessage").style.display = "none";
+    deleteButton.onclick = function() {
+       expenses = expenses.filter(function(item) {
+    return item.id !== expense.id;
+});
+
+    total = total - Number(expense.amount);
+
+    newExpense.remove();
+    if (expenses.length === 0) {
+    document.getElementById("emptyMessage").style.display = "block";
+}
+
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+
+    document.getElementById("totalSpent").textContent = total.toLocaleString();
+
+    document.getElementById("remainingBudget").textContent = (budget - total).toLocaleString();
+    if (total > budget) {
+    document.getElementById("budgetMessage").textContent = "Warning! You have exceeded your budget!";
+} else {
+    document.getElementById("budgetMessage").textContent = "You're within your budget!";
+}
+    };
+});
+async function loadExpensesFromFlask() {
+    const response = await fetch("/expenses");
+    const savedExpenses = await response.json();
+
+    expenses = savedExpenses;
+    total = expenses.reduce(function(sum, expense) {
+    return sum + Number(expense.amount);
+}, 0);
+
+document.getElementById("totalSpent").textContent = total.toLocaleString();
+
+document.getElementById("remainingBudget").textContent =
+    (budget - total).toLocaleString();
+if (total > budget) {
+    document.getElementById("budgetMessage").textContent =
+        "Warning! You have exceeded your budget!";
+} else if (budget > 0) {
+    document.getElementById("budgetMessage").textContent =
+        "You're within your budget!";
+}
+
+    let expenseList = document.getElementById("expenseList");
+    expenseList.innerHTML = "";
+
+    expenses.forEach(function(expense) {
+        let newExpense = document.createElement("li");
+
+        newExpense.textContent = expense.name + " - $" +
+            Number(expense.amount).toLocaleString() + " - " +
+            (expense.date || "Date unavailable");
+    let deleteButton = document.createElement("button");
+deleteButton.textContent = "Delete";
+
+deleteButton.onclick = async function() {
+    await fetch(`/delete_expense/${expense.id}`, {
+        method: "DELETE"
+    });
+
+    await loadExpensesFromFlask();
+};
+
+newExpense.appendChild(deleteButton);
+        expenseList.appendChild(newExpense);
+    });
+
+    document.getElementById("emptyMessage").style.display =
+        expenses.length === 0 ? "block" : "none";
+}
+
+loadExpensesFromFlask();
+</script>
+</body>
+</html>
