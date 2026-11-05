@@ -45,6 +45,3 @@ Through this project, I gained practical experience in:
 Built by AGUSA Naomi Oghenevoke, a Computer Engineering graduate interested in web development and IT support.
 
 [GitHub](https://github.com/naomiusa)
-## 📸 Screenshots
-
-<img src="dashboard.png" alt="Pink Expense Tracker Dashboard" width="600">
