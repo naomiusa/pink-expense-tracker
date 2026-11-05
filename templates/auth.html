@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Expense Tracker</title>
+
+    <style>
+        body {
+            background-color: #fff5f8;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px 20px;
+            color: #4a3039;
+        }
+
+        .auth-card {
+            background: white;
+            max-width: 350px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.15);
+        }
+
+        h1 {
+            color: #d63384;
+        }
+
+        input {
+            display: block;
+            width: 90%;
+            padding: 12px;
+            margin: 15px auto;
+            border: 1px solid #f0b6ce;
+            border-radius: 10px;
+        }
+
+        button {
+            background: #e75480;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        a {
+            color: #d63384;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-card">
+        <h1>🎀 My Expense Tracker 🎀</h1>
+
+        {% if action == "register" %}
+            <h2>Create Account</h2>
+            <form method="POST">
+                <input type="text" name="username" placeholder="Choose a username" required>
+                <input type="password" name="password" placeholder="Create a password" required>
+                <button type="submit">Register</button>
+            </form>
+            <p>Already have an account? <a href="/login">Login</a></p>
+
+        {% else %}
+            <h2>Welcome Back!</h2>
+            <form method="POST">
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <p>New here? <a href="/register">Create an account</a></p>
+        {% endif %}
+    </div>
+</body>
+</html>
