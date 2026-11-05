@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,318 +6,403 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Pink Expense Tracker</title>
 
-   
-<style>
-    * {
-        box-sizing: border-box;
-    }
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-    body {
-        background-color: #fff5f8;
-        font-family: Arial, sans-serif;
-        color: #4a3039;
-        text-align: center;
-        padding: 30px;
-        margin: 0;
-    }
-
-    h1 {
-        color: #d63384;
-        font-size: clamp(26px, 5vw, 36px);
-    }
-
-    h2 {
-        color: #c4457c;
-        margin-top: 35px;
-    }
-
-    input {
-        padding: 12px;
-        margin: 8px;
-        border: 1px solid #f0b6ce;
-        border-radius: 10px;
-        max-width: 100%;
-    }
-
-    button {
-        background-color: #e75480;
-        color: white;
-        border: none;
-        padding: 12px 20px;
-        border-radius: 10px;
-        cursor: pointer;
-        margin: 5px;
-    }
-
-    button:hover {
-        background-color: #c93668;
-    }
-
-    .summary-card {
-        background: #fff0f6;
-        border: 2px solid #ffc1dc;
-        border-radius: 18px;
-        padding: 10px;
-        margin: 10px auto;
-        width: 250px;
-        max-width: 100%;
-        box-shadow: 0 4px 10px rgba(255, 105, 180, 0.15);
-    }
-
-    .summary-card p {
-        color: #d63384;
-        font-size: 17px;
-        font-weight: bold;
-        margin: 5px 0;
-    }
-
-    @media screen and (max-width: 600px) {
         body {
-            padding: 15px;
+            background-color: #fff5f8;
+            font-family: Arial, sans-serif;
+            color: #4a3039;
+            text-align: center;
+            padding: 30px;
+            margin: 0;
         }
 
         h1 {
-            font-size: 26px;
+            color: #d63384;
+            font-size: clamp(26px, 5vw, 36px);
         }
 
         h2 {
-            font-size: 21px;
-            margin-top: 25px;
+            color: #c4457c;
+            margin-top: 35px;
         }
 
         input {
-            width: 100%;
-            margin: 8px 0;
-        }
-
-        button {
+            padding: 12px;
+            margin: 8px;
+            border: 1px solid #f0b6ce;
+            border-radius: 10px;
             max-width: 100%;
         }
 
-        .summary-card {
-            width: 100%;
+        button {
+            background-color: #e75480;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 5px;
         }
-    }
-</style>
 
+        button:hover {
+            background-color: #c93668;
+        }
+
+        .logout-button {
+            background-color: #8c5269;
+        }
+
+        .summary-card {
+            background: #fff0f6;
+            border: 2px solid #ffc1dc;
+            border-radius: 18px;
+            padding: 10px;
+            margin: 10px auto;
+            width: 250px;
+            max-width: 100%;
+            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.15);
+        }
+
+        .summary-card p {
+            color: #d63384;
+            font-size: 17px;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        #expenseList {
+            list-style: none;
+            padding: 0;
+            max-width: 500px;
+            margin: 15px auto;
+        }
+
+        #expenseList li {
+            background: white;
+            border: 1px solid #ffc1dc;
+            border-radius: 10px;
+            padding: 12px;
+            margin: 8px 0;
+            overflow-wrap: anywhere;
+        }
+
+        @media screen and (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            h2 {
+                font-size: 21px;
+                margin-top: 25px;
+            }
+
+            input {
+                width: 100%;
+                margin: 8px 0;
+            }
+
+            button {
+                max-width: 100%;
+            }
+
+            .summary-card {
+                width: 100%;
+            }
+        }
+.top-bar {
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.top-bar h1 {
+    margin: 10px 0;
+}
+
+.top-bar .logout-button {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+@media screen and (max-width: 600px) {
+    .top-bar {
+        padding-bottom: 45px;
+    }
+
+    .top-bar .logout-button {
+        top: auto;
+        right: 50%;
+        bottom: 0;
+        transform: translateX(50%);
+    }
+}
+    </style>
 </head>
+
 <body>
 
-<h1>🎀My Expense Tracker🎀</h1>
+   <div class="top-bar">
+    <h1>🎀My Expense Tracker🎀</h1>
+    <button class="logout-button" onclick="logout()">Logout</button>
+</div>
+
 <p>Take control of your money, one expense at a time.</p>
 
-<h2>Monthly Budget</h2>
-<input type="number" id="budget" placeholder="Enter your monthly budget">
-<button onclick="setBudget()">Set Budget</button>
+    <h2>Monthly Budget</h2>
 
-<p id="budgetMessage"></p>
+    <input
+        type="number"
+        id="budget"
+        placeholder="Enter your monthly budget"
+        min="0.01"
+        step="0.01"
+    >
 
-<h2>Add an Expense</h2>
+    <button onclick="setBudget()">Set Budget</button>
 
+    <p id="budgetMessage"></p>
 
-<p class="summary-card">Total Spent: ₦<span id="totalSpent">0</span></p>
+    <h2>Add an Expense</h2>
 
-<p class="summary-card">Remaining Budget: ₦<span  id="remainingBudget">0</span></p>
+    <input type="text" id="expenseName" placeholder="Expense name">
 
-<input type="text" id="expenseName" placeholder="Expense name">
-<input type="number" id="expenseAmount" placeholder="Amount">
-<button onclick="addExpense()">Add Expense</button>
+    <input
+        type="number"
+        id="expenseAmount"
+        placeholder="Amount"
+        min="0.01"
+        step="0.01"
+    >
 
-<h2>My Expenses</h2>
-<ul id="expenseList"></ul>
-<p id="emptyMessage">Your expenses will appear here.</p>
-<script>
-    function setBudget() {
-         let budgetInput = document.getElementById("budget").value;
+    <button onclick="addExpense()">Add Expense</button>
 
-         if (budgetInput === "" || Number(budgetInput) <= 0) {
-            document.getElementById("budgetMessage").textContent = "Please enter a valid budget";
-    return;
-}
+    <p class="summary-card">
+        Total Spent: ₦<span id="totalSpent">0</span>
+    </p>
 
-budget = Number(budgetInput);
-localStorage.setItem("budget", budget);
+    <p class="summary-card">
+        Remaining Budget: ₦<span id="remainingBudget">0</span>
+    </p>
 
-document.getElementById("budgetMessage").textContent = "Your monthly budget is set!";
-}
+    <h2>My Expenses</h2>
 
-let budget = Number(localStorage.getItem("budget")) || 0;
-let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
-let total = 0;
+    <ul id="expenseList"></ul>
 
-function addExpense() {
-    let name = document.getElementById("expenseName").value;
-    let amount = Number(document.getElementById("expenseAmount").value)
+    <p id="emptyMessage">Your expenses will appear here.</p>
 
-    if (name.trim()=== "" || amount <= 0) {
-        alert("Please ente an expense name and valid amount.");
-        return;
-    }
-    
-   let expense = {
-    id: Date.now(),
-    name: name,
-    amount: amount,
-    date: new Date().toLocaleDateString()
-};
-expenses.push(expense);
-fetch("/add_expense", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-        name: name,
-        amount: amount,
-        date: expense.date 
-    })
-})
-.then(response => response.json())
-.then(data => {
-    console.log(data);
-});
+    <script>
+        let budget = 0;
+        let expenses = [];
 
-    localStorage.setItem("expenses", JSON.stringify(expenses));
+        function updateSummary() {
+            const total = expenses.reduce(function(sum, expense) {
+                return sum + Number(expense.amount);
+            }, 0);
 
-    total = total + amount;
+            document.getElementById("totalSpent").textContent =
+                total.toLocaleString("en-NG");
 
-    let expenseList = document.getElementById("expenseList");
+            document.getElementById("remainingBudget").textContent =
+                (budget - total).toLocaleString("en-NG");
 
-    let newExpense = document.createElement("li");
-    
-newExpense.textContent = name + " - ₦" + amount.toLocaleString() + " - " + expense.date;
-    expenseList.appendChild(newExpense);
+            const message = document.getElementById("budgetMessage");
 
-let deleteButton = document.createElement ("button");
-deleteButton.textContent = "Delete";
-newExpense.appendChild(deleteButton);
-deleteButton.onclick = function() {
-    total = total - amount;
-    expenses = expenses.filter(item => item.id !== expense.id);
-    newExpense.remove();
-    document.getElementById("totalSpent").textContent = total.toLocaleString();
-    document.getElementById("remainingBudget").textContent = (budget - total).toLocaleString();
-    if (total > budget) {
-    document.getElementById("budgetMessage").textContent = "Warning! You have exceeded your budget!";
-} else {
-    document.getElementById("budgetMessage").textContent = "You're within your budget!";
-}
-    localStorage.setItem("expenses", JSON.stringify(expenses));
-}
-    document.getElementById("totalSpent").textContent = total.toLocaleString();
+            if (budget > 0 && total > budget) {
+                message.textContent =
+                    "Warning! You have exceeded your budget!";
+            } else if (budget > 0) {
+                message.textContent = "You're within your budget!";
+            } else {
+                message.textContent = "Please set your monthly budget.";
+            }
+        }
 
-    let remaining = budget - total;
-    document.getElementById("remainingBudget").textContent = remaining;
-    if (remaining < 0) {
-    document.getElementById("budgetMessage").textContent = "Warning! You have exceeded your budget!";
-} else {
-    document.getElementById("budgetMessage").textContent = "You're within your budget!";
-}
-    document.getElementById("expenseName").value = "";
-    document.getElementById("expenseAmount").value = "";
+        async function loadBudget() {
+            const response = await fetch("/budget");
 
-}
-document.getElementById("budget").value = budget || "";
+            if (!response.ok) {
+                throw new Error("Could not load your budget.");
+            }
 
-total = expenses.reduce(function(sum, expense) {
-    return sum + Number(expense.amount);
-}, 0);
+            const data = await response.json();
 
-document.getElementById("totalSpent").textContent = total.toLocaleString();
+            budget = Number(data.budget) || 0;
 
-document.getElementById("remainingBudget").textContent = (budget - total).toLocaleString();
-if (total > budget) {
-    document.getElementById("budgetMessage").textContent = "Warning! You have exceeded your budget!";
-} else if (budget > 0) {
-    document.getElementById("budgetMessage").textContent = "You're within your budget!";
-}
-expenses.forEach(function(expense) {
-    let expenseList = document.getElementById("expenseList");
+            document.getElementById("budget").value =
+                budget > 0 ? budget : "";
 
-    let newExpense = document.createElement("li");
-   newExpense.textContent = expense.name + " - ₦" +
-    Number(expense.amount).toLocaleString() + " - " + (expense.date || "Date unavailable");
-    
-    let deleteButton = document.createElement ("button");
-    deleteButton.textContent = "Delete";
+            updateSummary();
+        }
 
-    newExpense.appendChild(deleteButton);
-    expenseList.appendChild(newExpense);
-    document.getElementById("emptyMessage").style.display = "none";
-    deleteButton.onclick = function() {
-       expenses = expenses.filter(function(item) {
-    return item.id !== expense.id;
-});
+        async function setBudget() {
+            const input = document.getElementById("budget");
+            const amount = Number(input.value);
 
-    total = total - Number(expense.amount);
+            if (!Number.isFinite(amount) || amount <= 0) {
+                document.getElementById("budgetMessage").textContent =
+                    "Please enter a valid budget.";
+                return;
+            }
 
-    newExpense.remove();
-    if (expenses.length === 0) {
-    document.getElementById("emptyMessage").style.display = "block";
-}
+            try {
+                const response = await fetch("/budget", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ budget: amount })
+                });
 
-    localStorage.setItem("expenses", JSON.stringify(expenses));
+                const data = await response.json();
 
-    document.getElementById("totalSpent").textContent = total.toLocaleString();
+                if (!response.ok) {
+                    throw new Error(data.error || "Could not save budget.");
+                }
 
-    document.getElementById("remainingBudget").textContent = (budget - total).toLocaleString();
-    if (total > budget) {
-    document.getElementById("budgetMessage").textContent = "Warning! You have exceeded your budget!";
-} else {
-    document.getElementById("budgetMessage").textContent = "You're within your budget!";
-}
-    };
-});
-async function loadExpensesFromFlask() {
-    const response = await fetch("/expenses");
-    const savedExpenses = await response.json();
+                budget = Number(data.budget);
+                updateSummary();
 
-    expenses = savedExpenses;
-    total = expenses.reduce(function(sum, expense) {
-    return sum + Number(expense.amount);
-}, 0);
+                document.getElementById("budgetMessage").textContent =
+                    "Your monthly budget has been saved!";
+            } catch (error) {
+                document.getElementById("budgetMessage").textContent =
+                    error.message;
+            }
+        }
 
-document.getElementById("totalSpent").textContent = total.toLocaleString();
+        async function loadExpenses() {
+            const response = await fetch("/expenses");
 
-document.getElementById("remainingBudget").textContent =
-    (budget - total).toLocaleString();
-if (total > budget) {
-    document.getElementById("budgetMessage").textContent =
-        "Warning! You have exceeded your budget!";
-} else if (budget > 0) {
-    document.getElementById("budgetMessage").textContent =
-        "You're within your budget!";
-}
+            if (!response.ok) {
+                throw new Error("Could not load your expenses.");
+            }
 
-    let expenseList = document.getElementById("expenseList");
-    expenseList.innerHTML = "";
+            expenses = await response.json();
 
-    expenses.forEach(function(expense) {
-        let newExpense = document.createElement("li");
+            renderExpenses();
+        }
 
-        newExpense.textContent = expense.name + " - ₦" +
-            Number(expense.amount).toLocaleString() + " - " +
-            (expense.date || "Date unavailable");
-    let deleteButton = document.createElement("button");
-deleteButton.textContent = "Delete";
+        function renderExpenses() {
+            const expenseList = document.getElementById("expenseList");
 
-deleteButton.onclick = async function() {
-    await fetch(`/delete_expense/₦{expense.id}`, {
-        method: "DELETE"
-    });
+            expenseList.innerHTML = "";
 
-    await loadExpensesFromFlask();
-};
+            expenses.forEach(function(expense) {
+                const item = document.createElement("li");
 
-newExpense.appendChild(deleteButton);
-        expenseList.appendChild(newExpense);
-    });
+                item.appendChild(
+                    document.createTextNode(
+                        expense.name + " - ₦" +
+                        Number(expense.amount).toLocaleString("en-NG") +
+                        " - " + (expense.date || "Date unavailable") + " "
+                    )
+                );
 
-    document.getElementById("emptyMessage").style.display =
-        expenses.length === 0 ? "block" : "none";
-}
+                const deleteButton = document.createElement("button");
 
-loadExpensesFromFlask();
-</script>
+                deleteButton.textContent = "Delete";
+
+                deleteButton.onclick = function() {
+                    deleteExpense(expense.id);
+                };
+
+                item.appendChild(deleteButton);
+                expenseList.appendChild(item);
+            });
+
+            document.getElementById("emptyMessage").style.display =
+                expenses.length === 0 ? "block" : "none";
+
+            updateSummary();
+        }
+
+        async function addExpense() {
+            const nameInput = document.getElementById("expenseName");
+            const amountInput = document.getElementById("expenseAmount");
+
+            const name = nameInput.value.trim();
+            const amount = Number(amountInput.value);
+
+            if (!name || !Number.isFinite(amount) || amount <= 0) {
+                alert("Please enter an expense name and a valid amount.");
+                return;
+            }
+
+            try {
+                const response = await fetch("/add_expense", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        amount: amount,
+                        date: new Date().toLocaleDateString("en-NG")
+                    })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || "Could not add expense.");
+                }
+
+                nameInput.value = "";
+                amountInput.value = "";
+
+                await loadExpenses();
+
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        async function deleteExpense(id) {
+            try {
+                const response = await fetch(
+                    `/delete_expense/${id}`,
+                    { method: "DELETE" }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(data.error || "Could not delete expense.");
+                }
+
+                await loadExpenses();
+
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        function logout() {
+            window.location.href = "/logout";
+        }
+
+        async function initializeTracker() {
+            try {
+                await loadBudget();
+                await loadExpenses();
+            } catch (error) {
+                alert(error.message);
+            }
+        }
+
+        initializeTracker();
+    </script>
+
 </body>
 </html>
