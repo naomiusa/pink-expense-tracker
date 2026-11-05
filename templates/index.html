@@ -11,195 +11,392 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --pink: #e75480;
+            --pink-dark: #c93668;
+            --pink-light: #fff0f6;
+            --pink-border: #ffd0e2;
+            --text: #49313b;
+            --muted: #927b85;
+            --white: #ffffff;
+        }
+
         body {
-            background-color: #fff5f8;
-            font-family: Arial, sans-serif;
-            color: #4a3039;
-            text-align: center;
-            padding: 30px;
             margin: 0;
+            padding: 30px 20px 50px;
+            background: #fff5f8;
+            font-family: Arial, sans-serif;
+            color: var(--text);
         }
 
-        h1 {
+        .top-bar {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto 35px;
+            text-align: center;
+        }
+
+        .top-bar h1 {
             color: #d63384;
-            font-size: clamp(26px, 5vw, 36px);
+            font-size: clamp(26px, 5vw, 38px);
+            margin: 10px 0;
         }
 
-        h2 {
-            color: #c4457c;
-            margin-top: 35px;
-        }
-
-        input {
-            padding: 12px;
-            margin: 8px;
-            border: 1px solid #f0b6ce;
-            border-radius: 10px;
-            max-width: 100%;
+        .subtitle {
+            color: #80616f;
+            font-size: 16px;
+            margin: 10px 0 0;
         }
 
         button {
-            background-color: #e75480;
+            background: var(--pink);
             color: white;
             border: none;
             padding: 12px 20px;
             border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
             cursor: pointer;
-            margin: 5px;
+            transition: background 0.2s, transform 0.2s;
         }
 
         button:hover {
-            background-color: #c93668;
+            background: var(--pink-dark);
+            transform: translateY(-1px);
+        }
+
+        button:active {
+            transform: translateY(0);
         }
 
         .logout-button {
-            background-color: #8c5269;
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #8c5269;
+        }
+
+        .logout-button:hover {
+            background: #704052;
+        }
+
+        .dashboard {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .section-card {
+            background: var(--white);
+            border: 1px solid var(--pink-border);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 22px;
+            box-shadow: 0 6px 22px rgba(214, 51, 132, 0.06);
+        }
+
+        h2 {
+            color: #c4457c;
+            font-size: 22px;
+            margin: 0 0 20px;
+        }
+
+        .budget-form,
+        .expense-form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        input {
+            background: #fffafd;
+            color: var(--text);
+            border: 1px solid #f0b6ce;
+            border-radius: 11px;
+            padding: 13px 15px;
+            font-size: 15px;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+
+        input:focus {
+            border-color: var(--pink);
+            box-shadow: 0 0 0 3px rgba(231, 84, 128, 0.12);
+        }
+
+        .budget-form input {
+            width: 260px;
+        }
+
+        .expense-form input:first-child {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .expense-form input:nth-child(2) {
+            width: 180px;
+        }
+
+        #budgetMessage {
+            margin: 18px 0 0;
+            color: #8c5269;
+            font-size: 14px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 22px;
         }
 
         .summary-card {
-            background: #fff0f6;
-            border: 2px solid #ffc1dc;
+            background: linear-gradient(135deg, #fff0f6, #fff8fb);
+            border: 1px solid #ffc1dc;
             border-radius: 18px;
-            padding: 10px;
-            margin: 10px auto;
-            width: 250px;
-            max-width: 100%;
-            box-shadow: 0 4px 10px rgba(255, 105, 180, 0.15);
+            padding: 22px;
+            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.08);
         }
 
-        .summary-card p {
+        .summary-label {
+            color: var(--muted);
+            font-size: 14px;
+            margin: 0 0 10px;
+        }
+
+        .summary-value {
             color: #d63384;
-            font-size: 17px;
+            font-size: clamp(22px, 4vw, 30px);
             font-weight: bold;
-            margin: 5px 0;
+            margin: 0;
+            overflow-wrap: anywhere;
+        }
+
+        .expenses-card h2 {
+            margin-bottom: 18px;
         }
 
         #expenseList {
             list-style: none;
             padding: 0;
-            max-width: 500px;
-            margin: 15px auto;
+            margin: 0;
         }
 
         #expenseList li {
-            background: white;
-            border: 1px solid #ffc1dc;
-            border-radius: 10px;
-            padding: 12px;
-            margin: 8px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            background: #fffafd;
+            border: 1px solid #f8d5e4;
+            border-radius: 13px;
+            padding: 15px 17px;
+            margin: 10px 0;
+        }
+
+        .expense-details {
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            text-align: left;
             overflow-wrap: anywhere;
         }
 
-        @media screen and (max-width: 600px) {
+        .expense-name {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .expense-date {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .expense-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-shrink: 0;
+        }
+
+        .expense-amount {
+            color: #c4457c;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .delete-button {
+            background: #f4dce6;
+            color: #9b4568;
+            padding: 9px 14px;
+            font-size: 13px;
+        }
+
+        .delete-button:hover {
+            background: #edc3d5;
+        }
+
+        #emptyMessage {
+            background: #fffafd;
+            border: 1px dashed #f0b6ce;
+            border-radius: 13px;
+            padding: 25px 15px;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        @media screen and (max-width: 650px) {
             body {
-                padding: 15px;
+                padding: 20px 14px 35px;
             }
 
-            h1 {
-                font-size: 26px;
+            .top-bar {
+                padding-bottom: 45px;
+                margin-bottom: 20px;
+            }
+
+            .top-bar h1 {
+                font-size: 27px;
+                padding: 0 5px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+
+            .logout-button {
+                top: auto;
+                right: 50%;
+                bottom: 0;
+                transform: translateX(50%);
+            }
+
+            .section-card {
+                padding: 20px 16px;
+                border-radius: 17px;
             }
 
             h2 {
-                font-size: 21px;
-                margin-top: 25px;
+                font-size: 20px;
             }
 
-            input {
+            .budget-form,
+            .expense-form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .budget-form input,
+            .expense-form input,
+            .expense-form input:first-child,
+            .expense-form input:nth-child(2) {
                 width: 100%;
-                margin: 8px 0;
+                min-width: 0;
             }
 
-            button {
-                max-width: 100%;
+            .budget-form button,
+            .expense-form button {
+                width: 100%;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
             }
 
             .summary-card {
-                width: 100%;
+                padding: 18px;
+            }
+
+            #expenseList li {
+                align-items: flex-start;
+                padding: 13px;
+            }
+
+            .expense-right {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 8px;
             }
         }
-.top-bar {
-    position: relative;
-    max-width: 900px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.top-bar h1 {
-    margin: 10px 0;
-}
-
-.top-bar .logout-button {
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-@media screen and (max-width: 600px) {
-    .top-bar {
-        padding-bottom: 45px;
-    }
-
-    .top-bar .logout-button {
-        top: auto;
-        right: 50%;
-        bottom: 0;
-        transform: translateX(50%);
-    }
-}
     </style>
 </head>
 
 <body>
 
-   <div class="top-bar">
-    <h1>🎀My Expense Tracker🎀</h1>
-    <button class="logout-button" onclick="logout()">Logout</button>
-</div>
+    <header class="top-bar">
+        <h1>🎀 My Expense Tracker 🎀</h1>
+        <p class="subtitle">Take control of your money, one expense at a time.</p>
+        <button class="logout-button" onclick="logout()">Logout</button>
+    </header>
 
-<p>Take control of your money, one expense at a time.</p>
+    <main class="dashboard">
 
-    <h2>Monthly Budget</h2>
+        <section class="section-card">
+            <h2>Monthly Budget</h2>
 
-    <input
-        type="number"
-        id="budget"
-        placeholder="Enter your monthly budget"
-        min="0.01"
-        step="0.01"
-    >
+            <div class="budget-form">
+                <input
+                    type="number"
+                    id="budget"
+                    placeholder="Enter your monthly budget"
+                    min="0.01"
+                    step="0.01"
+                >
 
-    <button onclick="setBudget()">Set Budget</button>
+                <button onclick="setBudget()">Set Budget</button>
+            </div>
 
-    <p id="budgetMessage"></p>
+            <p id="budgetMessage">Please set your monthly budget.</p>
+        </section>
 
-    <h2>Add an Expense</h2>
+        <section class="section-card">
+            <h2>Add an Expense</h2>
 
-    <input type="text" id="expenseName" placeholder="Expense name">
+            <div class="expense-form">
+                <input
+                    type="text"
+                    id="expenseName"
+                    placeholder="Expense name"
+                >
 
-    <input
-        type="number"
-        id="expenseAmount"
-        placeholder="Amount"
-        min="0.01"
-        step="0.01"
-    >
+                <input
+                    type="number"
+                    id="expenseAmount"
+                    placeholder="Amount (₦)"
+                    min="0.01"
+                    step="0.01"
+                >
 
-    <button onclick="addExpense()">Add Expense</button>
+                <button onclick="addExpense()">Add Expense</button>
+            </div>
+        </section>
 
-    <p class="summary-card">
-        Total Spent: ₦<span id="totalSpent">0</span>
-    </p>
+        <section class="summary-grid">
+            <div class="summary-card">
+                <p class="summary-label">Total Spent</p>
+                <p class="summary-value">₦<span id="totalSpent">0</span></p>
+            </div>
 
-    <p class="summary-card">
-        Remaining Budget: ₦<span id="remainingBudget">0</span>
-    </p>
+            <div class="summary-card">
+                <p class="summary-label">Remaining Budget</p>
+                <p class="summary-value">₦<span id="remainingBudget">0</span></p>
+            </div>
+        </section>
 
-    <h2>My Expenses</h2>
+        <section class="section-card expenses-card">
+            <h2>My Expenses</h2>
 
-    <ul id="expenseList"></ul>
+            <ul id="expenseList"></ul>
 
-    <p id="emptyMessage">Your expenses will appear here.</p>
+            <p id="emptyMessage">Your expenses will appear here.</p>
+        </section>
+
+    </main>
 
     <script>
         let budget = 0;
@@ -301,23 +498,42 @@
             expenses.forEach(function(expense) {
                 const item = document.createElement("li");
 
-                item.appendChild(
-                    document.createTextNode(
-                        expense.name + " - ₦" +
-                        Number(expense.amount).toLocaleString("en-NG") +
-                        " - " + (expense.date || "Date unavailable") + " "
-                    )
-                );
+                const details = document.createElement("div");
+                details.className = "expense-details";
+
+                const name = document.createElement("span");
+                name.className = "expense-name";
+                name.textContent = expense.name;
+
+                const date = document.createElement("span");
+                date.className = "expense-date";
+                date.textContent = expense.date || "Date unavailable";
+
+                details.appendChild(name);
+                details.appendChild(date);
+
+                const right = document.createElement("div");
+                right.className = "expense-right";
+
+                const amount = document.createElement("span");
+                amount.className = "expense-amount";
+                amount.textContent =
+                    "₦" + Number(expense.amount).toLocaleString("en-NG");
 
                 const deleteButton = document.createElement("button");
-
+                deleteButton.className = "delete-button";
                 deleteButton.textContent = "Delete";
 
                 deleteButton.onclick = function() {
                     deleteExpense(expense.id);
                 };
 
-                item.appendChild(deleteButton);
+                right.appendChild(amount);
+                right.appendChild(deleteButton);
+
+                item.appendChild(details);
+                item.appendChild(right);
+
                 expenseList.appendChild(item);
             });
 
