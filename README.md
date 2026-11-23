@@ -51,5 +51,5 @@ Building this project strengthened my practical understanding of:
 
 ## Author
 
-Developed by **Naomi**
+Developed by **Agusa Oghenevoke Naomi**
 
