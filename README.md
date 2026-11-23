@@ -4,8 +4,7 @@ A personal expense management web application built with Flask, Python, PostgreS
 
 ## Live Demo
 
-[Visit My Expense Tracker](https://pink-expense-tracker.onrender.com/)
-
+[Visit My Expense Tracker]https://pink-expense-tracker.onrender.com/
 ## Features
 
 - User registration and login authentication
