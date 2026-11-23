@@ -31,10 +31,11 @@ A personal expense management web application built with Flask, Python, PostgreS
 
 ### Dashboard
 
-![Expense Tracker Dashboard](screenshots/expensetracker.png)
+![Expense Tracker Dashboard](screenshots/EXPENSETRACKER.PNG)
+
 ### Login Page
 
-![Expense Tracker Login](screenshots/login.png)
+![Expense Tracker Login](screenshots/EXPENSETRACKERR.PNG)
 
 ## What I Learned
 
