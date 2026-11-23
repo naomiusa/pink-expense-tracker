@@ -49,7 +49,22 @@ Building this project strengthened my practical understanding of:
 - Deploying web applications using Render
 - Version control with Git and GitHub
 
-## Author
+## Developer
 
-Developed by **Agusa Oghenevoke Naomi**
+**Agusa Naomi Oghenevoke**  
+Computer Engineering Graduate | Web Developer
+
+Designed and developed this expense tracking application as a practical project to demonstrate my skills in full-stack web development, database integration, user authentication and responsive interface design.
+
+I handled the development of both the frontend and backend, implemented the application's core expense management features, integrated PostgreSQL for data persistence, and deployed the application using Render.
+
+**Areas of focus:**
+- Full-stack web development
+- Python and Flask application development
+- PostgreSQL database integration
+- User authentication and session management
+- Frontend design and responsive styling
+- Application deployment and version control
+
+
 
