@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Pink Expense Tracker</title>
+    <title>My Expense Tracker</title>
 
     <style>
         * {
@@ -12,48 +12,77 @@
         }
 
         :root {
-            --pink: #e75480;
-            --pink-dark: #c93668;
-            --pink-light: #fff0f6;
-            --pink-border: #ffd0e2;
-            --text: #49313b;
-            --muted: #927b85;
-            --white: #ffffff;
+            --accent: #554c3e;
+            --accent-dark: #3f392f;
+            --background: #f5f0e7;
+            --surface: #ffffff;
+            --surface-soft: #faf8f3;
+            --border: #e5ded1;
+            --text: #292820;
+            --muted: #898477;
+            --success: #607b63;
+            --danger: #a65b50;
         }
 
         body {
             margin: 0;
-            padding: 30px 20px 50px;
-            background: #fff5f8;
+            padding: 35px 24px 60px;
+            background: var(--background);
             font-family: Arial, sans-serif;
             color: var(--text);
         }
 
+        button, input {
+            font: inherit;
+        }
+
         .top-bar {
-            position: relative;
-            max-width: 1000px;
+            max-width: 1120px;
             margin: 0 auto 35px;
-            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
         }
 
-        .top-bar h1 {
-            color: #d63384;
-            font-size: clamp(26px, 5vw, 38px);
-            margin: 10px 0;
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 13px;
         }
 
-        .subtitle {
-            color: #80616f;
-            font-size: 16px;
-            margin: 10px 0 0;
+        .brand-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 13px;
+            background: var(--accent);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .brand h1 {
+            font-size: 23px;
+            margin: 0;
+            color: var(--text);
+            letter-spacing: -0.6px;
+        }
+
+        .brand p {
+            color: var(--muted);
+            font-size: 13px;
+            margin: 5px 0 0;
         }
 
         button {
-            background: var(--pink);
+            background: var(--accent);
             color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 10px;
+            padding: 12px 19px;
+            border-radius: 9px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
@@ -61,7 +90,7 @@
         }
 
         button:hover {
-            background: var(--pink-dark);
+            background: var(--accent-dark);
             transform: translateY(-1px);
         }
 
@@ -70,112 +99,245 @@
         }
 
         .logout-button {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #8c5269;
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--border);
         }
 
         .logout-button:hover {
-            background: #704052;
+            background: var(--accent);
+            color: white;
         }
 
         .dashboard {
-            max-width: 1000px;
+            max-width: 1120px;
             margin: 0 auto;
         }
 
-        .section-card {
-            background: var(--white);
-            border: 1px solid var(--pink-border);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 22px;
-            box-shadow: 0 6px 22px rgba(214, 51, 132, 0.06);
+        .welcome-section {
+            margin-bottom: 28px;
         }
 
-        h2 {
-            color: #c4457c;
-            font-size: 22px;
-            margin: 0 0 20px;
-        }
-
-        .budget-form,
-        .expense-form {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        input {
-            background: #fffafd;
+        .welcome-section h2 {
+            font-size: 27px;
+            margin: 0 0 8px;
             color: var(--text);
-            border: 1px solid #f0b6ce;
-            border-radius: 11px;
-            padding: 13px 15px;
-            font-size: 15px;
-            outline: none;
-            transition: border 0.2s, box-shadow 0.2s;
+            letter-spacing: -0.7px;
         }
 
-        input:focus {
-            border-color: var(--pink);
-            box-shadow: 0 0 0 3px rgba(231, 84, 128, 0.12);
-        }
-
-        .budget-form input {
-            width: 260px;
-        }
-
-        .expense-form input:first-child {
-            flex: 1;
-            min-width: 180px;
-        }
-
-        .expense-form input:nth-child(2) {
-            width: 180px;
-        }
-
-        #budgetMessage {
-            margin: 18px 0 0;
-            color: #8c5269;
+        .welcome-section p {
+            color: var(--muted);
+            margin: 0;
             font-size: 14px;
         }
 
         .summary-grid {
             display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 18px;
             margin-bottom: 22px;
         }
 
         .summary-card {
-            background: linear-gradient(135deg, #fff0f6, #fff8fb);
-            border: 1px solid #ffc1dc;
-            border-radius: 18px;
-            padding: 22px;
-            box-shadow: 0 5px 15px rgba(255, 105, 180, 0.08);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 23px;
+            box-shadow: 0 4px 15px rgba(63, 57, 47, 0.035);
+        }
+
+        .summary-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
         }
 
         .summary-label {
             color: var(--muted);
-            font-size: 14px;
-            margin: 0 0 10px;
+            font-size: 13px;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .summary-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 10px;
+            background: var(--surface-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 17px;
         }
 
         .summary-value {
-            color: #d63384;
-            font-size: clamp(22px, 4vw, 30px);
-            font-weight: bold;
+            color: var(--text);
+            font-size: clamp(21px, 3vw, 27px);
+            font-weight: 700;
             margin: 0;
             overflow-wrap: anywhere;
+            letter-spacing: -0.7px;
         }
 
-        .expenses-card h2 {
-            margin-bottom: 18px;
+        .summary-note {
+            color: var(--muted);
+            font-size: 12px;
+            margin: 9px 0 0;
+        }
+
+        .overview-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 22px;
+            box-shadow: 0 4px 15px rgba(63, 57, 47, 0.035);
+        }
+
+        .overview-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 19px;
+        }
+
+        .overview-heading h3 {
+            font-size: 17px;
+            margin: 0;
+        }
+
+        .overview-heading span {
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .progress-track {
+            height: 10px;
+            background: #eeeae2;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--accent);
+            border-radius: 20px;
+            transition: width 0.4s ease;
+        }
+
+        .progress-footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        #budgetMessage {
+            margin: 16px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .success-message {
+            color: var(--success) !important;
+        }
+
+        .warning-message {
+            color: var(--danger) !important;
+        }
+
+        .section-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+            margin-bottom: 22px;
+        }
+
+        .section-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 24px;
+            box-shadow: 0 4px 15px rgba(63, 57, 47, 0.035);
+        }
+
+        .section-card h3 {
+            color: var(--text);
+            font-size: 17px;
+            margin: 0 0 7px;
+        }
+
+        .section-description {
+            color: var(--muted);
+            font-size: 13px;
+            margin: 0 0 20px;
+            line-height: 1.5;
+        }
+
+        .budget-form,
+        .expense-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        input {
+            width: 100%;
+            background: var(--surface-soft);
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            padding: 13px 14px;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+
+        input::placeholder {
+            color: #a39b8e;
+        }
+
+        input:focus {
+            border-color: #8b806b;
+            box-shadow: 0 0 0 3px rgba(85, 76, 62, 0.09);
+        }
+
+        .form-button {
+            width: 100%;
+            margin-top: 2px;
+        }
+
+        .expenses-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(63, 57, 47, 0.035);
+        }
+
+        .expenses-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .expenses-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .expenses-header p {
+            color: var(--muted);
+            font-size: 12px;
+            margin: 5px 0 0;
         }
 
         #expenseList {
@@ -189,138 +351,146 @@
             align-items: center;
             justify-content: space-between;
             gap: 15px;
-            background: #fffafd;
-            border: 1px solid #f8d5e4;
-            border-radius: 13px;
-            padding: 15px 17px;
-            margin: 10px 0;
+            padding: 16px 13px;
+            border-bottom: 1px solid #eeeae2;
+        }
+
+        #expenseList li:last-child {
+            border-bottom: none;
         }
 
         .expense-details {
             min-width: 0;
             display: flex;
             flex-direction: column;
-            gap: 5px;
-            text-align: left;
+            gap: 6px;
             overflow-wrap: anywhere;
         }
 
         .expense-name {
             font-weight: 600;
             color: var(--text);
+            font-size: 14px;
         }
 
         .expense-date {
             color: var(--muted);
-            font-size: 13px;
+            font-size: 12px;
         }
 
         .expense-right {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 16px;
             flex-shrink: 0;
         }
 
         .expense-amount {
-            color: #c4457c;
-            font-weight: bold;
+            color: var(--text);
+            font-weight: 700;
+            font-size: 14px;
             white-space: nowrap;
         }
 
         .delete-button {
-            background: #f4dce6;
-            color: #9b4568;
-            padding: 9px 14px;
-            font-size: 13px;
+            background: transparent;
+            color: var(--danger);
+            border: 1px solid #eadbd7;
+            padding: 8px 11px;
+            font-size: 12px;
         }
 
         .delete-button:hover {
-            background: #edc3d5;
+            background: #f8eeeb;
+            color: var(--danger);
         }
 
         #emptyMessage {
-            background: #fffafd;
-            border: 1px dashed #f0b6ce;
-            border-radius: 13px;
-            padding: 25px 15px;
+            background: var(--surface-soft);
+            border: 1px dashed var(--border);
+            border-radius: 10px;
+            padding: 28px 15px;
             color: var(--muted);
             margin: 0;
+            text-align: center;
+            font-size: 13px;
         }
 
-        @media screen and (max-width: 650px) {
+        @media screen and (max-width: 750px) {
             body {
-                padding: 20px 14px 35px;
-            }
-
-            .top-bar {
-                padding-bottom: 45px;
-                margin-bottom: 20px;
-            }
-
-            .top-bar h1 {
-                font-size: 27px;
-                padding: 0 5px;
-            }
-
-            .subtitle {
-                font-size: 14px;
-                line-height: 1.5;
-            }
-
-            .logout-button {
-                top: auto;
-                right: 50%;
-                bottom: 0;
-                transform: translateX(50%);
-            }
-
-            .section-card {
-                padding: 20px 16px;
-                border-radius: 17px;
-            }
-
-            h2 {
-                font-size: 20px;
-            }
-
-            .budget-form,
-            .expense-form {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .budget-form input,
-            .expense-form input,
-            .expense-form input:first-child,
-            .expense-form input:nth-child(2) {
-                width: 100%;
-                min-width: 0;
-            }
-
-            .budget-form button,
-            .expense-form button {
-                width: 100%;
+                padding: 25px 16px 40px;
             }
 
             .summary-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .summary-card:last-child {
+                grid-column: 1 / -1;
+            }
+
+            .section-grid {
                 grid-template-columns: 1fr;
-                gap: 12px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .top-bar {
+                align-items: flex-start;
+            }
+
+            .brand h1 {
+                font-size: 18px;
+            }
+
+            .brand p {
+                font-size: 11px;
+            }
+
+            .brand-icon {
+                width: 38px;
+                height: 38px;
+            }
+
+            .logout-button {
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+
+            .welcome-section h2 {
+                font-size: 23px;
+            }
+
+            .summary-grid {
+                gap: 10px;
             }
 
             .summary-card {
-                padding: 18px;
+                padding: 16px;
+            }
+
+            .summary-value {
+                font-size: 20px;
+            }
+
+            .overview-card,
+            .section-card,
+            .expenses-card {
+                padding: 19px 16px;
             }
 
             #expenseList li {
-                align-items: flex-start;
-                padding: 13px;
+                padding: 14px 5px;
             }
 
             .expense-right {
                 flex-direction: column;
                 align-items: flex-end;
-                gap: 8px;
+                gap: 7px;
+            }
+
+            .progress-footer {
+                font-size: 11px;
             }
         }
     </style>
@@ -329,71 +499,138 @@
 <body>
 
     <header class="top-bar">
-        <h1>🎀 My Expense Tracker 🎀</h1>
-        <p class="subtitle">Take control of your money, one expense at a time.</p>
+        <div class="brand">
+            <div class="brand-icon">₦</div>
+            <div>
+                <h1>My Expense Tracker</h1>
+                <p>Your personal finance dashboard</p>
+            </div>
+        </div>
+
         <button class="logout-button" onclick="logout()">Logout</button>
     </header>
 
     <main class="dashboard">
 
-        <section class="section-card">
-            <h2>Monthly Budget</h2>
+        <section class="welcome-section">
+            <h2>Your financial overview</h2>
+            <p>Keep track of your spending and stay on top of your budget.</p>
+        </section>
 
-            <div class="budget-form">
-                <input
-                    type="number"
-                    id="budget"
-                    placeholder="Enter your monthly budget"
-                    min="0.01"
-                    step="0.01"
-                >
+        <section class="summary-grid">
 
-                <button onclick="setBudget()">Set Budget</button>
+            <div class="summary-card">
+                <div class="summary-top">
+                    <p class="summary-label">Monthly Budget</p>
+                    <div class="summary-icon">₦</div>
+                </div>
+                <p class="summary-value">₦<span id="totalBudget">0</span></p>
+                <p class="summary-note">Your spending limit</p>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-top">
+                    <p class="summary-label">Total Spent</p>
+                    <div class="summary-icon">↗</div>
+                </div>
+                <p class="summary-value">₦<span id="totalSpent">0</span></p>
+                <p class="summary-note">Your recorded expenses</p>
+            </div>
+
+            <div class="summary-card">
+                <div class="summary-top">
+                    <p class="summary-label">Remaining Balance</p>
+                    <div class="summary-icon">◷</div>
+                </div>
+                <p class="summary-value">₦<span id="remainingBudget">0</span></p>
+                <p class="summary-note">Available from your budget</p>
+            </div>
+
+        </section>
+
+        <section class="overview-card">
+            <div class="overview-heading">
+                <h3>Budget overview</h3>
+                <span id="budgetPercentage">0% used</span>
+            </div>
+
+            <div class="progress-track">
+                <div class="progress-fill" id="budgetProgress"></div>
+            </div>
+
+            <div class="progress-footer">
+                <span id="spentProgressLabel">₦0 spent</span>
+                <span id="remainingProgressLabel">₦0 remaining</span>
             </div>
 
             <p id="budgetMessage">Please set your monthly budget.</p>
         </section>
 
-        <section class="section-card">
-            <h2>Add an Expense</h2>
+        <section class="section-grid">
 
-            <div class="expense-form">
-                <input
-                    type="text"
-                    id="expenseName"
-                    placeholder="Expense name"
-                >
+            <div class="section-card">
+                <h3>Set your budget</h3>
+                <p class="section-description">
+                    Decide how much you want to spend within your budget.
+                </p>
 
-                <input
-                    type="number"
-                    id="expenseAmount"
-                    placeholder="Amount (₦)"
-                    min="0.01"
-                    step="0.01"
-                >
+                <div class="budget-form">
+                    <input
+                        type="number"
+                        id="budget"
+                        placeholder="Enter your monthly budget"
+                        min="0.01"
+                        step="0.01"
+                    >
 
-                <button onclick="addExpense()">Add Expense</button>
+                    <button class="form-button" onclick="setBudget()">
+                        Save Budget
+                    </button>
+                </div>
             </div>
+
+            <div class="section-card">
+                <h3>Add an expense</h3>
+                <p class="section-description">
+                    Record your spending to keep your finances organised.
+                </p>
+
+                <div class="expense-form">
+                    <input
+                        type="text"
+                        id="expenseName"
+                        placeholder="What did you spend on?"
+                    >
+
+                    <input
+                        type="number"
+                        id="expenseAmount"
+                        placeholder="Amount (₦)"
+                        min="0.01"
+                        step="0.01"
+                    >
+
+                    <button class="form-button" onclick="addExpense()">
+                        Add Expense
+                    </button>
+                </div>
+            </div>
+
         </section>
 
-        <section class="summary-grid">
-            <div class="summary-card">
-                <p class="summary-label">Total Spent</p>
-                <p class="summary-value">₦<span id="totalSpent">0</span></p>
+        <section class="expenses-card">
+            <div class="expenses-header">
+                <div>
+                    <h3>Recent transactions</h3>
+                    <p>Your recorded expenses appear here.</p>
+                </div>
             </div>
-
-            <div class="summary-card">
-                <p class="summary-label">Remaining Budget</p>
-                <p class="summary-value">₦<span id="remainingBudget">0</span></p>
-            </div>
-        </section>
-
-        <section class="section-card expenses-card">
-            <h2>My Expenses</h2>
 
             <ul id="expenseList"></ul>
 
-            <p id="emptyMessage">Your expenses will appear here.</p>
+            <p id="emptyMessage">
+                No expenses recorded yet. Add your first expense above.
+            </p>
         </section>
 
     </main>
@@ -402,26 +639,60 @@
         let budget = 0;
         let expenses = [];
 
+        function formatMoney(amount) {
+            return Number(amount).toLocaleString("en-NG");
+        }
+
         function updateSummary() {
             const total = expenses.reduce(function(sum, expense) {
                 return sum + Number(expense.amount);
             }, 0);
 
+            const remaining = budget - total;
+
+            document.getElementById("totalBudget").textContent =
+                formatMoney(budget);
+
             document.getElementById("totalSpent").textContent =
-                total.toLocaleString("en-NG");
+                formatMoney(total);
 
             document.getElementById("remainingBudget").textContent =
-                (budget - total).toLocaleString("en-NG");
+                formatMoney(remaining);
 
+            const percentage = budget > 0
+                ? (total / budget) * 100
+                : 0;
+
+            const displayedPercentage = Math.min(percentage, 100);
+
+            document.getElementById("budgetProgress").style.width =
+                displayedPercentage + "%";
+
+            document.getElementById("budgetPercentage").textContent =
+                Math.round(percentage) + "% used";
+
+            document.getElementById("spentProgressLabel").textContent =
+                "₦" + formatMoney(total) + " spent";
+
+            document.getElementById("remainingProgressLabel").textContent =
+                "₦" + formatMoney(Math.max(remaining, 0)) + " remaining";
+
+            const progress = document.getElementById("budgetProgress");
             const message = document.getElementById("budgetMessage");
 
             if (budget > 0 && total > budget) {
+                progress.style.background = "#a65b50";
                 message.textContent =
                     "Warning! You have exceeded your budget!";
+                message.className = "warning-message";
             } else if (budget > 0) {
+                progress.style.background = "#607b63";
                 message.textContent = "You're within your budget!";
+                message.className = "success-message";
             } else {
+                progress.style.background = "#554c3e";
                 message.textContent = "Please set your monthly budget.";
+                message.className = "";
             }
         }
 
@@ -472,9 +743,14 @@
 
                 document.getElementById("budgetMessage").textContent =
                     "Your monthly budget has been saved!";
+                document.getElementById("budgetMessage").className =
+                    "success-message";
+
             } catch (error) {
                 document.getElementById("budgetMessage").textContent =
                     error.message;
+                document.getElementById("budgetMessage").className =
+                    "warning-message";
             }
         }
 
@@ -518,7 +794,7 @@
                 const amount = document.createElement("span");
                 amount.className = "expense-amount";
                 amount.textContent =
-                    "₦" + Number(expense.amount).toLocaleString("en-NG");
+                    "₦" + formatMoney(expense.amount);
 
                 const deleteButton = document.createElement("button");
                 deleteButton.className = "delete-button";
