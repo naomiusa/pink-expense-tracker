@@ -1,50 +1,55 @@
-# 🎀 Pink Expense Tracker
+# My Expense Tracker
 
-A responsive personal finance web application built to help users manage monthly budgets and keep track of their expenses.
+A personal expense management web application built with Flask, Python, PostgreSQL, HTML, CSS and JavaScript. Designed with a clean, modern beige interface to make tracking personal finances simple and intuitive.
 
-## 🌸 Live Demo
+## Live Demo
 
-[Try the Pink Expense Tracker](https://pink-expense-tracker.onrender.com/)
+[Visit My Expense Tracker](https://pink-expense-tracker.onrender.com/)
 
-## ✨ Features
+## Features
 
-- User registration and login
-- Secure password hashing
-- Set and manage monthly budgets
-- Add and track expenses
-- View total expenses and remaining budget
-- Delete recorded expenses
-- Individual user accounts and data
-- Responsive dashboard for desktop and mobile devices
+- User registration and login authentication
+- Secure, individual user accounts
+- Password visibility toggle
+- Monthly budget setting
+- Add and delete expenses
+- Automatic calculation of total expenses
+- Remaining budget tracking
+- Visual budget progress indicator
+- Recent transactions overview
+- Responsive, minimalist beige user interface
 
-## 🛠️ Technologies Used
+## Technologies Used
 
-- Python
-- Flask
-- PostgreSQL
-- HTML5
-- CSS3
-- JavaScript
-- Git and GitHub
-- Render (deployment)
+- **Backend:** Python, Flask
+- **Database:** PostgreSQL
+- **Frontend:** HTML, CSS, JavaScript
+- **Deployment:** Render
+- **Version Control:** Git and GitHub
 
-## 🚀 What I Learned
+## Screenshots
 
-Through this project, I gained practical experience in:
+### Dashboard
 
-- Building web applications with Flask
-- Connecting a Python application to a PostgreSQL database
-- Implementing user authentication
-- Creating frontend interfaces with HTML, CSS and JavaScript
-- Working with API requests using JavaScript Fetch
-- Using Git and GitHub for version control
-- Deploying a web application online using Render
+![Expense Tracker Dashboard](screenshots/dashboard.png)
 
-## 👩🏽‍💻 Developer
+### Login Page
 
-Built by AGUSA Naomi Oghenevoke, a Computer Engineering graduate interested in web development and IT support.
+![Expense Tracker Login](screenshots/login.png)
 
-[GitHub](https://github.com/naomiusa)
-## 📸 Screenshots
+## What I Learned
 
-<img src="dashboard.png" alt="Pink Expense Tracker Dashboard" width="600">
+Building this project strengthened my practical understanding of:
+
+- Backend development with Flask
+- Database integration and management
+- User authentication and session handling
+- REST-style API interactions
+- Frontend development and UI styling
+- Deploying web applications using Render
+- Version control with Git and GitHub
+
+## Author
+
+Developed by **Naomi**
+
